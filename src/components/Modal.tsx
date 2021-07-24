@@ -11,7 +11,7 @@ interface ModalProps {
 
 const Modal: VFC<ModalProps> = ({ isOpen, onClose, body, buttons = [], title = "" }) => {
 	return (
-		<BaseModal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose} size="xl" >
+		<BaseModal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose} size="xl">
 			<ModalOverlay />
 			<ModalContent>
 				<ModalHeader>{title}</ModalHeader>
