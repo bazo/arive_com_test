@@ -21,6 +21,7 @@ const OrdersPage: VFC = () => {
 						<Th>Pizza</Th>
 						<Th>Toppings</Th>
 						<Th>Customer</Th>
+						<Th>Price</Th>
 					</Tr>
 				</Thead>
 				<Tbody>
@@ -31,6 +32,7 @@ const OrdersPage: VFC = () => {
 								<Td>{order.pizza.pizzaSize}</Td>
 								<Td>{order.pizza.toppings.join(",")}</Td>
 								<Td>{order.payment.customer}</Td>
+								<Td>{order.price}$</Td>
 							</Tr>
 						);
 					})}

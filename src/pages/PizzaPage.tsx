@@ -5,6 +5,7 @@ import Modal from "components/Modal";
 import PaymentForm, { PaymentFormValues } from "components/PaymentForm";
 import PizzaSizeSelector from "components/pizza/PizzaSizeSelector";
 import ToppingsSelector from "components/pizza/ToppingsSelector";
+import { getTotalPrice } from "libs/functions";
 import usePizzaOrder from "libs/usePizzaOrder";
 import { useRef, VFC } from "react";
 import { FormRenderProps } from "react-final-form";
@@ -28,7 +29,6 @@ const PizzaPage: VFC = () => {
 
 	const createMutation = useMutation(createOrder, {
 		onSuccess: () => {
-			//queryClient.invalidateQueries(QUERY_KEY);
 			toast({
 				title: "Pizza order created.",
 				status: "success",
@@ -88,7 +88,7 @@ const PizzaPage: VFC = () => {
 			</Box>
 			<Box>
 				<Heading as="h2">Your order</Heading>
-				<Cart state={state} />
+				<Cart state={state} toppings={toppings} />
 			</Box>
 		</Grid>
 	);

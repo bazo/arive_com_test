@@ -1,4 +1,5 @@
 import { OrderPayload, OrderResponse } from "api/types";
+import { getPizzaBySize, getTotalPrice } from "libs/functions";
 import { rest, RestRequest } from "msw";
 
 import { pizzas, toppings } from "./data";
@@ -13,12 +14,17 @@ function decodeOrders(): OrderResponse[] {
 	return (JSON.parse(localStorage.getItem(STORAGE_NAMESPACE) as string) || []) as OrderResponse[];
 }
 
-function createOrder(payload: OrderPayload): OrderResponse {
-	return {
-		id: Math.random().toString(36).substr(2, 9),
-		time: new Date().toISOString(),
-		...payload,
-	};
+function createOrder(payload: OrderPayload): OrderResponse | null {
+	const pizza = getPizzaBySize(payload.pizza.pizzaSize, pizzas);
+	if (pizza) {
+		return {
+			id: Math.random().toString(36).substr(2, 9),
+			time: new Date().toISOString(),
+			price: getTotalPrice(pizza, payload.pizza.toppings, toppings),
+			...payload,
+		};
+	}
+	return null;
 }
 
 export const handlers = [
@@ -38,11 +44,13 @@ export const handlers = [
 		const orders = decodeOrders();
 
 		const newOrder = createOrder(req.body);
+		if (newOrder !== null) {
+			orders.push(newOrder);
+			saveOrders(orders);
 
-		orders.push(newOrder);
+			return res(ctx.status(201), ctx.json(newOrder));
+		}
 
-		saveOrders(orders);
-
-		return res(ctx.status(201), ctx.json(newOrder));
+		return res(ctx.status(400));
 	}),
 ];

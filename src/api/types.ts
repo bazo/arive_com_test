@@ -34,6 +34,7 @@ export interface OrderPayload {
 export interface OrderResponse extends OrderPayload {
 	id: string;
 	time: string;
+	price: number;
 }
 
 export interface Card {
