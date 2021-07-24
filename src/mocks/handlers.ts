@@ -1,4 +1,4 @@
-import { OrderPayload, Pizza, PizzaSize, Topping } from "api/types";
+import { OrderPayload, OrderResponse, Pizza, PizzaSize, Topping } from "api/types";
 import { rest, RestRequest } from "msw";
 
 const pizzas: Pizza[] = [
@@ -44,21 +44,22 @@ const toppings: Topping[] = [
 
 const STORAGE_NAMESPACE = "pizzas";
 
-function saveOrders(orders: OrderPayload[]) {
+function saveOrders(orders: OrderResponse[]) {
 	localStorage.setItem(STORAGE_NAMESPACE, JSON.stringify(orders));
 }
 
-function decodeOrders(): OrderPayload[] {
-	return (JSON.parse(localStorage.getItem(STORAGE_NAMESPACE) as string) || []) as OrderPayload[];
+function decodeOrders(): OrderResponse[] {
+	return (JSON.parse(localStorage.getItem(STORAGE_NAMESPACE) as string) || []) as OrderResponse[];
 }
-/*
-function createOrder(pizza: Pizza, toppings: Topping[]): OrderPayload {
+
+function createOrder(payload: OrderPayload): OrderResponse {
 	return {
-		pizzaSize: pizza.id,
-		toppings: toppings.map(({ id }) => id),
+		id: Math.random().toString(36).substr(2, 9),
+		time: new Date().toISOString(),
+		...payload,
 	};
 }
-*/
+
 export const handlers = [
 	rest.get("/pizzas", (req, res, ctx) => {
 		return res(ctx.status(200), ctx.json(pizzas));
@@ -75,7 +76,7 @@ export const handlers = [
 	rest.post("/orders", (req: RestRequest<OrderPayload>, res, ctx) => {
 		const orders = decodeOrders();
 
-		const newOrder = req.body;
+		const newOrder = createOrder(req.body);
 
 		orders.push(newOrder);
 

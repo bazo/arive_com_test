@@ -27,7 +27,13 @@ export interface OrderPayload {
 	};
 	payment: {
 		cardNumber: string;
+		customer: string;
 	};
+}
+
+export interface OrderResponse extends OrderPayload {
+	id: string;
+	time: string;
 }
 
 export interface Card {

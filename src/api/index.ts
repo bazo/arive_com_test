@@ -1,6 +1,6 @@
-import { Card, OrderPayload, Pizza, Topping, ToppingType } from "./types";
+import { Card, OrderPayload, OrderResponse, Pizza, Topping, ToppingType } from "./types";
 
-export async function fetchOrders(): Promise<OrderPayload[]> {
+export async function fetchOrders(): Promise<OrderResponse[]> {
 	const response = await fetch("/orders", {
 		method: "GET",
 		headers: {
@@ -41,6 +41,7 @@ export async function createOrder({ pizza, toppings, card }: { pizza: Pizza; top
 		},
 		payment: {
 			cardNumber: card.number, //in real case this would be some hash from payment service
+			customer: card.name,
 		},
 	};
 

@@ -1,5 +1,6 @@
 import { Container } from "@chakra-ui/react";
 import Header from "components/Header";
+import OrdersPage from "pages/OrdersPage";
 import PizzaPage from "pages/PizzaPage";
 import { VFC } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -14,7 +15,10 @@ const App: VFC = () => {
 				<Header />
 				<Container maxW="container.xl" marginTop="5">
 					<Switch>
-						<Route path="/">
+						<Route path="/orders" exact>
+							<OrdersPage />
+						</Route>
+						<Route path="/" exact>
 							<PizzaPage />
 						</Route>
 					</Switch>
