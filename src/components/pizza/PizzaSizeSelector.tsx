@@ -22,13 +22,14 @@ const PizzaSizeSelector: VFC<PizzaSizeSelectorProps> = ({ pizzas, onChange }) =>
 	}
 
 	return (
-		<HStack spacing="24px">
+		<HStack spacing="24px" data-testid="pizza-selector">
 			{pizzas.map((pizza) => {
 				return (
 					<Box
 						__css={{ cursor: "pointer", textAlign: "center", border: `${selected?.id === pizza.id ? "1px solid white" : "none"}` }}
 						key={pizza.id}
 						onClick={handleChange.bind(null, pizza)}
+						data-testid={pizza.id}
 					>
 						{pizza.name} {pizza.price}$
 						<Box width="200px" height="80px">

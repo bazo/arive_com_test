@@ -6,14 +6,14 @@ import PaymentForm, { PaymentFormValues } from "components/PaymentForm";
 import PizzaSizeSelector from "components/pizza/PizzaSizeSelector";
 import ToppingsSelector from "components/pizza/ToppingsSelector";
 import usePizzaOrder from "libs/usePizzaOrder";
-import { useRef } from "react";
+import { useRef, VFC } from "react";
 import { FormRenderProps } from "react-final-form";
 import { useMutation, useQuery } from "react-query";
 
 const QUERY_KEY_PIZZAS = "pizzas";
 const QUERY_KEY_TOPPINGS = "toppings";
 
-const PizzaPage = () => {
+const PizzaPage: VFC = () => {
 	const { state, selectPizza, selectToppings } = usePizzaOrder();
 
 	const submitRef = useRef<FormRenderProps["handleSubmit"]>();
