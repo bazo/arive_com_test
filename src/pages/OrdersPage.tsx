@@ -11,8 +11,6 @@ const OrdersPage = () => {
 		return <Spinner size="xl" />;
 	}
 
-	console.log({ orders });
-
 	return (
 		<Box>
 			<Table variant="simple">
